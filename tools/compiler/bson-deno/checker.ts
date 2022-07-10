@@ -31,8 +31,7 @@ export async function checkMissingTestCases() {
     }
   }
   console.info(
-    `Found ${foundTestSuites.size}/${
-      foundTestSuites.size + missingTestSuites.size
+    `Found ${foundTestSuites.size}/${foundTestSuites.size + missingTestSuites.size
     } test suites`,
   );
   if (missingTestSuites.size > 0) {
@@ -41,5 +40,10 @@ export async function checkMissingTestCases() {
       'color: yellow',
       missingTestSuites,
     );
+    const missingReport = JSON.stringify(Array.from(missingTestSuites.values()).sort(), undefined, 4);
+    await Deno.writeTextFile('./build/bson-deno/test/missingTestsSuites.json', missingReport)
+  } else {
+    await Deno.remove('./build/bson-deno/test/missingTestsSuites.json', { recursive: true })
   }
+
 }

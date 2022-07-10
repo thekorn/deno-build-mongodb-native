@@ -1,4 +1,4 @@
-import { run } from '../common/mod.ts'
+import { run } from '../common/mod.ts';
 
 run({
   sourceDir: './upstream/js-bson/src',

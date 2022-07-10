@@ -40,7 +40,7 @@ export async function run({
         await Deno.remove(join(destDir, entry.name), { recursive: true });
       }
     }
-  } catch { }
+  } catch {}
 
   const sourceFilePathMap = new Map<string, string>();
 

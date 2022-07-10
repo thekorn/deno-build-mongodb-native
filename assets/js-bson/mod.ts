@@ -1,1 +1,1 @@
-export * from './_src/bson.ts'
+export * from './_src/bson.ts';

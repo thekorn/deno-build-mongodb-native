@@ -1,1 +1,1 @@
-export {Buffer} from "https://esm.sh/buffer";
+export { Buffer } from 'https://esm.sh/buffer';

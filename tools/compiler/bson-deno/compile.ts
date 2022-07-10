@@ -1,5 +1,6 @@
 import { run } from '../common/mod.ts';
 import { removeProcessDeclarationParserUtils } from './hotfixes.ts';
+import { checkMissingTestCases } from './checker.ts';
 
 run({
   sourceDir: './upstream/js-bson/src',
@@ -28,5 +29,6 @@ run({
   ],
   preCompileHooks: [
     removeProcessDeclarationParserUtils,
+    checkMissingTestCases,
   ],
 });

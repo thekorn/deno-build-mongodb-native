@@ -2,6 +2,35 @@
 
 This repository includes all tooling and required changes to build the `mongodb-native` client for deno.
 
+## Howto port the deno libraries
+
+### Prerequisite
+
+Install `deno`, see [documentation](https://deno.land/manual/getting_started/installation)
+The node `typescript` library is used to process upstream, run `npm install` in the root of the repository
+
+### update upstream
+
+upstream of `js-bson` is tracked as git submodule, use usual `git submodules` techniques to fetch and potentially update the upstream baseline, like
+
+```
+$ git submodule update --init --recursive --remote
+```
+
+### build bson-deno
+
+First clone the current version of `bson-deno`:
+
+```
+$ deno run -A tools/drake/local-drakefile.ts clone-bson-deno
+```
+
+Then compile the new version of `bson-deno`:
+
+```
+$ deno run -A tools/drake/local-drakefile.ts build-bson-deno
+```
+
 ## TODOS
 
 - [ ] port js-bson for deno

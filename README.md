@@ -36,10 +36,10 @@ $ deno run -A tools/drake/local-drakefile.ts build-bson-deno
 - [ ] port js-bson for deno
   - [x] fix type exports in `src/bson.ts`
         In order to fix this issue upstream a ticket and [PR](https://github.com/mongodb/js-bson/pull/507) has been created. As a workaround a firk with this feature applied is used as a baseline
-  - [ ] implement a basic set of tests for `bson-deno`
+  - [x] implement a basic set of tests for `bson-deno`
   - [ ] potentially even consider porting all upstream tests
 - [ ] port node-mongodb-native for deno
-- [ ] implement bson-ext in rust / wasm
+- [ ] implement bson-ext in rust / wasm (or not, as bson-ext is [reaching EOL](https://jira.mongodb.org/projects/NODE/issues/NODE-3654))
 
 ## Thanks
 

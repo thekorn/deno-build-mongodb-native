@@ -48,7 +48,9 @@ export async function run({
         await Deno.remove(join(destDir, entry.name), { recursive: true });
       }
     }
-  } catch {}
+  } catch {
+    // doing nothing, just skip
+  }
 
   const sourceFilePathMap = new Map<string, string>();
 
@@ -95,6 +97,7 @@ export async function run({
     const rewrittenFile: string[] = [];
     let cursor = 0;
     let isFirstNode = true;
+    // deno-lint-ignore no-explicit-any
     parsedSource.forEachChild((node: any) => {
       if (isFirstNode) {
         isFirstNode = false;

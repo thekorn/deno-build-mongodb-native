@@ -1,4 +1,11 @@
 {
+  "lint": {
+    "files": {
+      "include": [
+        "tools/"
+      ]
+    }
+  },
   "fmt": {
     "files": {
       "exclude": [

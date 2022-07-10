@@ -11,4 +11,14 @@ task('clone-bson-deno', ['clean-build'], async function () {
   await sh('git clone git@github.com:thekorn/bson-deno.git build/bson-deno');
 });
 
+desc('Build bson-deno');
+task('build-bson-deno', [], async function () {
+  await sh([
+    'cp assets/js-bson/src/buffer.deno.ts upstream/js-bson/src/',
+    'cp assets/js-bson/src/globals.deno.ts upstream/js-bson/src/',
+  ])
+  await sh('deno run --unstable -A  tools/compiler/bson-deno/compile.ts');
+  await sh('cp assets/js-bson/mod.ts build/bson-deno')
+});
+
 run();

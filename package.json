@@ -1,0 +1,6 @@
+{
+  "name": "deno-build-mongodb-native",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

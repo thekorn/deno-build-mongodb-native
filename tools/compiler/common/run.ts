@@ -28,6 +28,7 @@ export async function run({
   importRewriteRules = [],
   injectImports = [],
   sourceFilter,
+  preCompileHooks = [],
 }: {
   sourceDir: string;
   destDir: string;
@@ -40,6 +41,7 @@ export async function run({
   }[];
   injectImports?: { imports: string[]; from: string }[];
   sourceFilter?: (path: string) => boolean;
+  preCompileHooks?: (() => Promise<void>)[];
 }) {
   const destClean = new Set(destEntriesToClean);
   try {
@@ -66,12 +68,16 @@ export async function run({
     }
   }
 
-  for (const [sourcePath, destPath] of sourceFilePathMap) {
-    compileFileForDeno(sourcePath, destPath);
+  for await (const [sourcePath, destPath] of sourceFilePathMap) {
+    await compileFileForDeno(sourcePath, destPath);
   }
 
   for await (const fileToCopy of copyFiles) {
     await Deno.copyFile(fileToCopy.from, fileToCopy.to);
+  }
+
+  for await (const hook of preCompileHooks) {
+    await hook();
   }
 
   async function compileFileForDeno(sourcePath: string, destPath: string) {

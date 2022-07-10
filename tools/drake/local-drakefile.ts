@@ -21,6 +21,7 @@ task('build-bson-deno', [], async function () {
   //await sh('cp assets/js-bson/mod.ts build/bson-deno');
   await sh('deno fmt', { cwd: 'build/bson-deno' });
   await sh('deno check mod.ts', { cwd: 'build/bson-deno' });
+  await sh('deno test', { cwd: 'build/bson-deno' });
 });
 
 run();

@@ -14,9 +14,9 @@ const ts = require('typescript');
 const normalisePath = (path: string) => path.replace(/\\/g, '/');
 
 function getRelativePath(filename: string, targetFile: string) {
-  const relPath = relative(dirname(filename), targetFile)
-  if (relPath.startsWith('.')) return relPath
-  return `./${relPath}`
+  const relPath = relative(dirname(filename), targetFile);
+  if (relPath.startsWith('.')) return relPath;
+  return `./${relPath}`;
 }
 
 export async function run({
@@ -32,7 +32,7 @@ export async function run({
   sourceDir: string;
   destDir: string;
   destEntriesToClean?: string[];
-  copyFiles?: { from: string, to: string }[];
+  copyFiles?: { from: string; to: string }[];
   pathRewriteRules?: { match: RegExp; replace: string }[];
   importRewriteRules?: {
     match: RegExp;
@@ -48,7 +48,7 @@ export async function run({
         await Deno.remove(join(destDir, entry.name), { recursive: true });
       }
     }
-  } catch { }
+  } catch {}
 
   const sourceFilePathMap = new Map<string, string>();
 
@@ -69,7 +69,7 @@ export async function run({
   }
 
   for await (const fileToCopy of copyFiles) {
-    await Deno.copyFile(fileToCopy.from, fileToCopy.to)
+    await Deno.copyFile(fileToCopy.from, fileToCopy.to);
   }
 
   async function compileFileForDeno(sourcePath: string, destPath: string) {
@@ -150,7 +150,11 @@ export async function run({
 
         const importPath = file.slice(pos, end);
 
-        let resolvedImportPath = resolveImportPath(sourcePath, importPath, sourcePath);
+        let resolvedImportPath = resolveImportPath(
+          sourcePath,
+          importPath,
+          sourcePath,
+        );
 
         if (resolvedImportPath.endsWith('/adapter.node.ts')) {
           resolvedImportPath = resolvedImportPath.replace(
@@ -175,11 +179,18 @@ export async function run({
     return join(destDir, destPath);
   }
 
-  function resolveImportPath(filename: string, importPath: string, sourcePath: string) {
+  function resolveImportPath(
+    filename: string,
+    importPath: string,
+    sourcePath: string,
+  ) {
     // First check importRewriteRules
     for (const rule of importRewriteRules) {
       if (rule.match.test(importPath)) {
-        const repl = getRelativePath(filename, join(sourceDir, rule.replace as string))
+        const repl = getRelativePath(
+          filename,
+          join(sourceDir, rule.replace as string),
+        );
         return importPath.replace(rule.match, repl);
       }
     }

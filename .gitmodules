@@ -1,0 +1,4 @@
+[submodule "upstream/js-bson"]
+	path = upstream/js-bson
+	url = https://github.com/mongodb/js-bson.git
+	ignore = dirty

@@ -13,6 +13,12 @@ const ts = require('typescript');
 
 const normalisePath = (path: string) => path.replace(/\\/g, '/');
 
+function getRelativePath(filename: string, targetFile: string) {
+  const relPath = relative(dirname(filename), targetFile)
+  if (relPath.startsWith('.')) return relPath
+  return `./${relPath}`
+}
+
 export async function run({
   sourceDir,
   destDir,
@@ -40,7 +46,7 @@ export async function run({
         await Deno.remove(join(destDir, entry.name), { recursive: true });
       }
     }
-  } catch {}
+  } catch { }
 
   const sourceFilePathMap = new Map<string, string>();
 
@@ -107,6 +113,7 @@ export async function run({
           const importDecls = neededImports.map((neededImport) => {
             const imports = neededImport.imports.join(', ');
             const importPath = resolveImportPath(
+              sourcePath,
               relative(dirname(sourcePath), neededImport.from),
               sourcePath,
             );
@@ -137,7 +144,7 @@ export async function run({
 
         const importPath = file.slice(pos, end);
 
-        let resolvedImportPath = resolveImportPath(importPath, sourcePath);
+        let resolvedImportPath = resolveImportPath(sourcePath, importPath, sourcePath);
 
         if (resolvedImportPath.endsWith('/adapter.node.ts')) {
           resolvedImportPath = resolvedImportPath.replace(
@@ -162,11 +169,12 @@ export async function run({
     return join(destDir, destPath);
   }
 
-  function resolveImportPath(importPath: string, sourcePath: string) {
+  function resolveImportPath(filename: string, importPath: string, sourcePath: string) {
     // First check importRewriteRules
     for (const rule of importRewriteRules) {
       if (rule.match.test(importPath)) {
-        return importPath.replace(rule.match, rule.replace as string);
+        const repl = getRelativePath(filename, join(sourceDir, rule.replace as string))
+        return importPath.replace(rule.match, repl);
       }
     }
 

@@ -17,7 +17,7 @@ run({
   importRewriteRules: [
     {
       match: /^buffer$/,
-      replace: '../buffer.deno.ts',
+      replace: './buffer.deno.ts',
     },
   ],
 });

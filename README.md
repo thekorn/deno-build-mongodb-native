@@ -7,5 +7,3 @@ This repository includes all tooling and required changes to build the `mongodb-
 - [ ] port js-bson for deno
 - [ ] port node-mongodb-native for deno
 - [ ] implement bson-ext in rust / wasm
-
- 

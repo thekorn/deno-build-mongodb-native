@@ -4,8 +4,14 @@ run({
   sourceDir: './upstream/js-bson/src',
   destDir: './build/bson-deno',
   destEntriesToClean: ['_src', 'mod.ts'],
+  copyFiles: [
+    {
+      from: './assets/js-bson/mod.ts',
+      to: './build/bson-deno/mod.ts'
+    }
+  ],
   pathRewriteRules: [
-    { match: /^src\/index.node.ts$/, replace: 'mod.ts' },
+    //{ match: /^upstream\/js-bson\/src\/index.node.ts$/, replace: 'mod.ts' },
     { match: /^upstream\/js-bson\/src\//, replace: '_src/' },
   ],
   injectImports: [

@@ -23,6 +23,7 @@ export async function run({
   sourceDir,
   destDir,
   destEntriesToClean,
+  copyFiles = [],
   pathRewriteRules = [],
   importRewriteRules = [],
   injectImports = [],
@@ -31,6 +32,7 @@ export async function run({
   sourceDir: string;
   destDir: string;
   destEntriesToClean?: string[];
+  copyFiles?: { from: string, to: string }[];
   pathRewriteRules?: { match: RegExp; replace: string }[];
   importRewriteRules?: {
     match: RegExp;
@@ -64,6 +66,10 @@ export async function run({
 
   for (const [sourcePath, destPath] of sourceFilePathMap) {
     compileFileForDeno(sourcePath, destPath);
+  }
+
+  for await (const fileToCopy of copyFiles) {
+    await Deno.copyFile(fileToCopy.from, fileToCopy.to)
   }
 
   async function compileFileForDeno(sourcePath: string, destPath: string) {

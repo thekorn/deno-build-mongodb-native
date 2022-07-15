@@ -1,5 +1,4 @@
 [submodule "upstream/js-bson"]
 	path = upstream/js-bson
-	url = https://github.com/thekorn/js-bson.git
-	branch = enable_isolatedModules
+	url = https://github.com/mongodb/js-bson.git
 	ignore = dirty

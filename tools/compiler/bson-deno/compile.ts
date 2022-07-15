@@ -27,7 +27,7 @@ run({
       from: './upstream/js-bson/src/globals.deno.ts',
     },
   ],
-  preCompileHooks: [
+  postCompileHooks: [
     removeProcessDeclarationParserUtils,
     checkMissingTestCases,
   ],

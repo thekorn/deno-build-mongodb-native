@@ -5,3 +5,4 @@
 [submodule "upstream/node-mongodb-native"]
 	path = upstream/node-mongodb-native
 	url = https://github.com/mongodb/node-mongodb-native.git
+	ignore = dirty

@@ -24,4 +24,18 @@ task('build-bson-deno', [], async function () {
   await sh('deno test', { cwd: 'build/bson-deno' });
 });
 
+desc('Build deno-mongodb-native');
+task('build-deno-mongodb-native', [], async function () {
+  await sh([
+    //  'cp assets/js-bson/src/buffer.deno.ts upstream/js-bson/src/',
+    'cp assets/node-mongodb-native/src/globals.deno.ts upstream/node-mongodb-native/src/',
+  ]);
+  await sh('deno run --unstable -A  tools/compiler/deno-mongodb-native/compile.ts');
+  //await sh('cp assets/js-bson/mod.ts build/bson-deno');
+  //await sh('deno fmt', { cwd: 'build/bson-deno' });
+  //await sh('deno check mod.ts', { cwd: 'build/bson-deno' });
+  //await sh('deno test', { cwd: 'build/bson-deno' });
+});
+
+
 run();
